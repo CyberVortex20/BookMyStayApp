@@ -103,6 +103,7 @@ public class UseCase12DataPersistenceRecovery {
             history = new BookingHistory();
         }
 
+
         history.addReservation(new Reservation("R301", "Arun", "Single"));
         history.addReservation(new Reservation("R302", "Bala", "Suite"));
 
