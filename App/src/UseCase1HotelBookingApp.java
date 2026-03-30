@@ -1,46 +1,51 @@
-/**
- * UseCase3InventorySetup
- * Demonstrates centralized room inventory management for Book My Stay App
- *
- * @version 3.1
- */
 import java.util.*;
 
-class RoomInventory {
-    private final Map<String, Integer> inventory = new HashMap<>();
+class Reservation {
+    private String guestName;
+    private String roomType;
 
-    public RoomInventory() {
-        inventory.put("Single", 10);
-        inventory.put("Double", 5);
-        inventory.put("Suite", 2);
+    public Reservation(String guestName, String roomType) {
+        this.guestName = guestName;
+        this.roomType = roomType;
     }
 
-    public int getAvailability(String roomType) {
-        return inventory.getOrDefault(roomType, 0);
+    public String getGuestName() {
+        return guestName;
     }
 
-    public void updateAvailability(String roomType, int change) {
-        inventory.put(roomType, inventory.getOrDefault(roomType, 0) + change);
+    public String getRoomType() {
+        return roomType;
+    }
+}
+
+class BookingRequestQueue {
+    private Queue<Reservation> queue = new LinkedList<>();
+
+    public void addRequest(Reservation reservation) {
+        queue.offer(reservation);
     }
 
-    public void displayInventory() {
-        System.out.println("Current Room Inventory:");
-        for (String type : inventory.keySet()) {
-            System.out.println(type + " Rooms: " + inventory.get(type) + " available");
+    public void showQueue() {
+        for (Reservation r : queue) {
+            System.out.println("Guest: " + r.getGuestName() + " | Room Type: " + r.getRoomType());
         }
     }
 }
 
-public class UseCase3InventorySetup {
-
+public class UseCase5BookingRequestQueue {
     public static void main(String[] args) {
-        RoomInventory inventory = new RoomInventory();
+        BookingRequestQueue bookingQueue = new BookingRequestQueue();
 
-        inventory.displayInventory();
+        Reservation r1 = new Reservation("Arun", "Single");
+        Reservation r2 = new Reservation("Bala", "Double");
+        Reservation r3 = new Reservation("Charan", "Suite");
+        Reservation r4 = new Reservation("Divya", "Single");
 
-        System.out.println("\nUpdating availability: Booking 1 Single Room...");
-        inventory.updateAvailability("Single", -1);
+        bookingQueue.addRequest(r1);
+        bookingQueue.addRequest(r2);
+        bookingQueue.addRequest(r3);
+        bookingQueue.addRequest(r4);
 
-        inventory.displayInventory();
+        bookingQueue.showQueue();
     }
 }
